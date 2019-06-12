@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{test['name']}}{% endblock %}
+
+{% block stylesheets %}
+{% endblock %}
+
+{% block body %}
+
+    <h1>{{test['name']|upper}}</h1>
+    {% for q in test['q'] %}
+        <div id="question_wording">{{q['w']}}</div>
+        <div id="answers">
+        	{% for a in q['a'] %}
+        		<div>{{a}}</div>
+        	{% endfor %}
+        </div>>
+    {% endfor %}
+   
+  
+
+{% endblock %}

@@ -1,0 +1,12 @@
+.row {
+	margin-top: 5%;
+}
+
+.test_container {
+    border: 1px solid black;
+    padding: 5%;
+    width: 100%; 
+    min-height: 20%;
+    overflow: hidden; 
+    cursor: pointer;
+}
