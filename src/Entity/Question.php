@@ -7,7 +7,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\QuestionRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\wordingRepository")
  */
 class Question
 {
@@ -21,10 +21,10 @@ class Question
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $question;
+    private $wording;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Test", mappedBy="questions")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Test", mappedBy="wordings")
      */
     private $tests;
 
@@ -38,14 +38,14 @@ class Question
         return $this->id;
     }
 
-    public function getQuestion(): ?string
+    public function getWording(): ?string
     {
-        return $this->question;
+        return $this->wording;
     }
 
-    public function setQuestion(string $question): self
+    public function setWording(string $wording): self
     {
-        $this->question = $question;
+        $this->wording = $wording;
 
         return $this;
     }
