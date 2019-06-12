@@ -5,7 +5,7 @@ namespace App\DataFixtures;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use App\Entity\Test;
-use App\DataFixtures\QuestionFixture;
+use App\DataFixtures\QuestionAnswerFixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 
 class TestFixture extends Fixture implements DependentFixtureInterface
@@ -17,6 +17,7 @@ class TestFixture extends Fixture implements DependentFixtureInterface
         	$t = new Test();
         	$ref_number = $i+1;
         	$t->setName('Test '.$ref_number);
+            $t->setDescription('Some dummy description');
         	for ($k=0; $k < 5; $k++) { 
         		$t->addQuestion($this->getReference('q'.$j));
         		$j++;
@@ -30,7 +31,7 @@ class TestFixture extends Fixture implements DependentFixtureInterface
     public function getDependencies()
     {
         return array(
-            QuestionFixture::class,
+            QuestionAnswerFixture::class,
         );
     }
 }

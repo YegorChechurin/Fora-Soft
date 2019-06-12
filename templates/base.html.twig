@@ -13,7 +13,9 @@
         {% block stylesheets %}{% endblock %}
     </head>
     <body>
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
+    	<div class="container-fluid" style="padding-top:0%; height: 100vh;">
+    		{% block body %}{% endblock %}
+    	</div>
     </body>
+    {% block javascripts %}{% endblock %}
 </html>

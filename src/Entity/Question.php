@@ -28,9 +28,20 @@ class Question
      */
     private $tests;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $type;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Answer", mappedBy="questions")
+     */
+    private $answers;
+
     public function __construct()
     {
         $this->tests = new ArrayCollection();
+        $this->answers = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -73,6 +84,46 @@ class Question
         if ($this->tests->contains($test)) {
             $this->tests->removeElement($test);
             $test->removeQuestion($this);
+        }
+
+        return $this;
+    }
+
+    public function getType(): ?string
+    {
+        return $this->type;
+    }
+
+    public function setType(string $type): self
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Answer[]
+     */
+    public function getAnswers(): Collection
+    {
+        return $this->answers;
+    }
+
+    public function addAnswer(Answer $answer): self
+    {
+        if (!$this->answers->contains($answer)) {
+            $this->answers[] = $answer;
+            $answer->addQuestion($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAnswer(Answer $answer): self
+    {
+        if ($this->answers->contains($answer)) {
+            $this->answers->removeElement($answer);
+            $answer->removeQuestion($this);
         }
 
         return $this;

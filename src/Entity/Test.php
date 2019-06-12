@@ -28,6 +28,11 @@ class Test
      */
     private $questions;
 
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $description;
+
     public function __construct()
     {
         $this->questions = new ArrayCollection();
@@ -72,6 +77,18 @@ class Test
         if ($this->questions->contains($question)) {
             $this->questions->removeElement($question);
         }
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(?string $description): self
+    {
+        $this->description = $description;
 
         return $this;
     }
