@@ -12,7 +12,7 @@ class WordedAnswerType extends AbstractType
 {
 	public function buildForm(FormBuilderInterface $builder, array $options) 
 	{
-		$builder->add('wording', TextType::class, ['label'=>'']);
+		$builder->add('wording', TextType::class, ['attr'=>['placeholder'=>'Type your answer']]);
 		/*if ((Answer::class)->getType()=='worded') {
 			$builder->add('wording', TextType::class, ['label'=>'','class'=>Answer::class]);
 		} else {
