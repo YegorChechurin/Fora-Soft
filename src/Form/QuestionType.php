@@ -2,23 +2,15 @@
 namespace App\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use App\Entity\Question;
 
-class TrueFalseQuestionType extends AbstractType 
+class QuestionType extends AbstractType 
 {
 	public function buildForm(FormBuilderInterface $builder, array $options) 
 	{
-		$q = $options['data'];
-
-		$builder->add('wording', ChoiceType::class, [
-			'label'=>$q->getWording(),
-			'choices'=>['True','False'],
-			'expanded'=>true,
-			'multiple'=>false]
-		);
+		$builder->add('answers',ChoiceType::class);
 	}
 
 	public function configureOptions(OptionsResolver $resolver)

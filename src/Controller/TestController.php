@@ -8,6 +8,10 @@ use App\Entity\Test;
 use App\Repository\TestRepository;
 use App\Form\WordedAnswerType;
 use App\Form\TrueFalseAnswerType;
+use App\Form\ManyAnswersQuestionType;
+use App\Form\TrueFalseQuestionType;
+use App\Form\OneAnswerQuestionType;
+use App\Form\QuestionType;
 
 class TestController extends AbstractController
 {
@@ -59,16 +63,28 @@ class TestController extends AbstractController
 		$questions = $test_obj->getQuestions();
 		$i = 0;
 		foreach ($questions as $q) {
+			if ($q->getType()=='true/false') {
+				$forms[$i] = $this->createForm(TrueFalseQuestionType::class,$q);
+			} elseif ($q->getType()=='one_answer') {
+				$forms[$i] = $this->createForm(OneAnswerQuestionType::class,$q);
+			} else {
+				/*$forms[$i] = $this->createForm(ManyAnswersQuestionType::class,$q,
+					['q'=>$q]);*/
+				$forms[$i] = $this->createForm(ManyAnswersQuestionType::class,$q);
+				//$forms[$i] = $this->createForm(OneAnswerQuestionType::class,$q);
+			}
+			//$forms[$i] = $this->createForm(QuestionType::class,$q);
+			$form_views[$i] = $forms[$i]->createView();
 			$test['q'][$i]['w'] = $q->getWording();
 			$answers_obj = $q->getAnswers();
 			$j = 0;
 			foreach ($answers_obj as $a) {
 				if ($a->getType()=='worded') {
-					$forms[$j] = $this->createForm(WordedAnswerType::class,$a);
+					$forms_a[$j] = $this->createForm(WordedAnswerType::class,$a);
 				} else {
-					$forms[$j] = $this->createForm(TrueFalseAnswerType::class,$a);
+					$forms_a[$j] = $this->createForm(TrueFalseAnswerType::class,$a);
 				}
-				$form_views[$j] = $forms[$j]->createView();
+				$form_views_a[$j] = $forms_a[$j]->createView();
 				$test['q'][$i]['a'][$j] = $a->getWording();
 				$j++;
 			}
