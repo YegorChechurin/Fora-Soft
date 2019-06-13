@@ -6,6 +6,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Test;
 use App\Repository\TestRepository;
+use App\Form\WordedAnswerType;
+use App\Form\TrueFalseAnswerType;
 
 class TestController extends AbstractController
 {
@@ -61,14 +63,21 @@ class TestController extends AbstractController
 			$answers_obj = $q->getAnswers();
 			$j = 0;
 			foreach ($answers_obj as $a) {
+				if ($a->getType()=='worded') {
+					$forms[$j] = $this->createForm(WordedAnswerType::class,$a);
+				} else {
+					$forms[$j] = $this->createForm(TrueFalseAnswerType::class,$a);
+				}
+				$form_views[$j] = $forms[$j]->createView();
 				$test['q'][$i]['a'][$j] = $a->getWording();
 				$j++;
 			}
-			/*$test['q'][$i]['a'] = $answers_obj[0]->getWording();*/
 			$i++;
 		}
+
 		return $this->render('test/specific_test.html.twig', [
             'test' => $test,
+            'forms' => $form_views
         ]);
     }
 }

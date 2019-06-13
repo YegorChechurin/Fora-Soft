@@ -16,7 +16,9 @@
         	{% endfor %}
         </div>>
     {% endfor %}
-   
-  
+    
+    {% for f in forms %}
+    	{{form(f)}}
+    {% endfor %}
 
 {% endblock %}
