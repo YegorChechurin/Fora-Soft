@@ -10,7 +10,9 @@ class OneAnswerQuestionType extends AbstractType
 {
 	public function buildForm(FormBuilderInterface $builder, array $options) 
 	{
-		$builder->add('wording', TextType::class, ['label'=>'']);
+		$q = $options['data'];
+
+		$builder->add('wording', TextType::class, ['label'=>$q->getWording()]);
 	}
 
 	public function configureOptions(OptionsResolver $resolver)

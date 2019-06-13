@@ -15,12 +15,9 @@
     		{% for j in 1..row['length'] %}
     			<div class="col-sm">
     				<div class="test_container">
-    					<h1><a href="http://127.0.0.1:8000/tests/{{row['tests'][j-1]['id']}}">{{row['tests'][j-1]['name']|upper}}</a></h1>
-    					<div>{{row['tests'][j-1]['d']}}</div>
+                        <h1><a href="{{path('specific_test',{'test_id':row['tests'][j-1]['id']})}}">{{row['tests'][j-1]['name']|upper}}</a></h1>
+                        <div>{{row['tests'][j-1]['d']}}</div>
     				</div>
-    				{#{% for q in row['tests'][j-1]['q'] %}
-						<div>{{q}}</div>
-					{% endfor %}#}
     			</div>
     		{% endfor %}  		
     	</div>

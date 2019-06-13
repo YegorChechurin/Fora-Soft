@@ -2,29 +2,24 @@
 namespace App\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\CheckBoxType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use App\Entity\Question;
+use App\Entity\Answer;
 
-class TrueFalseQuestionType extends AbstractType 
+class ManyAnswerType extends AbstractType 
 {
 	public function buildForm(FormBuilderInterface $builder, array $options) 
 	{
-		$q = $options['data'];
-
-		$builder->add('wording', ChoiceType::class, [
-			'label'=>$q->getWording(),
-			'choices'=>['True','False'],
-			'expanded'=>true,
-			'multiple'=>false]
-		);
+		$builder->add('wording', ChoiceType::class, ['label'=>'']);
 	}
 
 	public function configureOptions(OptionsResolver $resolver)
 	{
 	    $resolver->setDefaults([
-	        'data_class' => Question::class,
+	        'data_class' => Answer::class,
 	    ]);
 	}
 }

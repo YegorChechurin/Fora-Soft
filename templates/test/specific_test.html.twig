@@ -21,4 +21,16 @@
     	{{form(f)}}
     {% endfor %}
 
+    <div>------------------------------------------</div>
+
+    {% for f in empty_forms %}
+        {{form_start(f)}}
+            {{form_label(f.wording)}}
+            {% for a in f.answers %}
+                {{form_row(a.wording)}}
+            {% endfor %}
+        {{form_end(f)}}
+        <div>------------------------------------------</div>
+    {% endfor %}
+
 {% endblock %}
