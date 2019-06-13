@@ -9,7 +9,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use App\Entity\Answer;
 
-class TrueFalseAnswerType extends AbstractType 
+class ManyAnswerType extends AbstractType 
 {
 	public function buildForm(FormBuilderInterface $builder, array $options) 
 	{

@@ -12,6 +12,7 @@ use App\Form\ManyAnswersQuestionType;
 use App\Form\TrueFalseQuestionType;
 use App\Form\OneAnswerQuestionType;
 use App\Form\QuestionType;
+use App\Form\EmptyQuestionType;
 
 class TestController extends AbstractController
 {
@@ -68,23 +69,15 @@ class TestController extends AbstractController
 			} elseif ($q->getType()=='one_answer') {
 				$forms[$i] = $this->createForm(OneAnswerQuestionType::class,$q);
 			} else {
-				/*$forms[$i] = $this->createForm(ManyAnswersQuestionType::class,$q,
-					['q'=>$q]);*/
 				$forms[$i] = $this->createForm(ManyAnswersQuestionType::class,$q);
-				//$forms[$i] = $this->createForm(OneAnswerQuestionType::class,$q);
 			}
-			//$forms[$i] = $this->createForm(QuestionType::class,$q);
+			$forms_empty[$i] = $this->createForm(QuestionType::class,$q);
+            $empty_form_views[$i] = $forms_empty[$i]->createView();
 			$form_views[$i] = $forms[$i]->createView();
 			$test['q'][$i]['w'] = $q->getWording();
 			$answers_obj = $q->getAnswers();
 			$j = 0;
 			foreach ($answers_obj as $a) {
-				if ($a->getType()=='worded') {
-					$forms_a[$j] = $this->createForm(WordedAnswerType::class,$a);
-				} else {
-					$forms_a[$j] = $this->createForm(TrueFalseAnswerType::class,$a);
-				}
-				$form_views_a[$j] = $forms_a[$j]->createView();
 				$test['q'][$i]['a'][$j] = $a->getWording();
 				$j++;
 			}
@@ -93,7 +86,8 @@ class TestController extends AbstractController
 
 		return $this->render('test/specific_test.html.twig', [
             'test' => $test,
-            'forms' => $form_views
+            'forms' => $form_views,
+            'empty_forms' => $empty_form_views
         ]);
     }
 }

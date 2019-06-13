@@ -8,24 +8,11 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use App\Entity\Answer;
 
-class WordedAnswerType extends AbstractType 
+class OneAnswerType extends AbstractType 
 {
 	public function buildForm(FormBuilderInterface $builder, array $options) 
 	{
 		$builder->add('wording', TextType::class, ['label'=>'']);
-		/*if ((Answer::class)->getType()=='worded') {
-			$builder->add('wording', TextType::class, ['label'=>'','class'=>Answer::class]);
-		} else {
-			$builder->add('wording', ChoiceType::class, ['label'=>'','class'=>Answer::class]);
-		}*/
-		/*$builder->add('wording', function(Answer $a){
-			if ($a->getType()=='worded') {
-				TextType::class;
-			} else {
-				ChoiceType::class;
-			}
-			
-		}, ['label'=>'','class'=>Answer::class]);*/
 	}
 
 	public function configureOptions(OptionsResolver $resolver)

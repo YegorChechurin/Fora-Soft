@@ -24,25 +24,17 @@ class ManyAnswersQuestionType extends AbstractType
 			$i++;
 		}
 
-		//$q = $options['q'];
-		/*$answers = $q->getAnswers();
-		$i = 0;
-		foreach ($answers as $a) {
-			$choices[$i] = $a->getWording();
-			$i++;
-		}*/
-
-		$builder->add('answers', ChoiceType::class, [
+		/*$builder->add('answers', ChoiceType::class, [
 			'choices'=>[
-				$choices[0],
-				$choices[1],
-				$choices[2],
-				$choices[3],
-				$choices[4]
+				'0'=>$choices[0],
+				'1'=>$choices[1],
+				'2'=>$choices[2],
+				'3'=>$choices[3],
+				'4'=>$choices[4]
 			],
 			'expanded'=>true,
 			'multiple'=>true]
-		);
+		);*/
 
 		/*$builder->add('wording', ChoiceType::class, [
 			'choices'=>[
@@ -62,19 +54,20 @@ class ManyAnswersQuestionType extends AbstractType
 			'multiple'=>true]
 		);*/
 
-		/*$builder->add('answers', EntityType::class, [
+		$builder->add('answers', EntityType::class, [
 			'class'=>Answer::class,
 			'choices'=>$q->getAnswers(),
-			'query_builder' => function (EntityRepository $er) use ($a_IDs,$i) {
+			/*'query_builder' => function (EntityRepository $er) use ($a_IDs,$i) {
 		        return $er->createQueryBuilder('a')
 		            ->where('a.id BETWEEN :id1 AND :id2')
 		            ->setParameter('id1', $a_IDs[0])
    					->setParameter('id2', $a_IDs[$i-1]);
-		    },
+		    },*/
 			'label'=>$q->getWording(),
+			/*'choice_label'=>'wording',*/
 			'expanded'=>true,
 			'multiple'=>true]
-		);*/
+		);
 	}
 
 	public function configureOptions(OptionsResolver $resolver)
