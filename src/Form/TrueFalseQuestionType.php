@@ -15,7 +15,7 @@ class TrueFalseQuestionType extends AbstractType
 
 		$builder->add('wording', ChoiceType::class, [
 			'label'=>$q->getWording(),
-			'choices'=>['True','False'],
+			'choices'=>['True'=>true,'False'=>false],
 			'expanded'=>true,
 			'multiple'=>false]
 		);

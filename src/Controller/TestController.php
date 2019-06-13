@@ -5,7 +5,8 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Test;
-use App\Repository\TestRepository;
+use App\Service\TestFetcher;
+use App\Service\TestDepictor;
 use App\Form\WordedAnswerType;
 use App\Form\TrueFalseAnswerType;
 use App\Form\ManyAnswersQuestionType;
@@ -19,32 +20,15 @@ class TestController extends AbstractController
     /**
      * @Route("/", name="homepage")
      */
-    public function index()
+    public function index(TestFetcher $test_fetcher, TestDepictor $test_depictor)
     {
-    	$test_repo = $this->getDoctrine()->getRepository(Test::class);
-    	$all_tests = $test_repo->findAll();
-    	$i = 0;
-    	foreach ($all_tests as $test) {
-    		$tests[$i]['id'] = $test->getId();
-    		$tests[$i]['name'] = $test->getName();
-    		$tests[$i]['d'] = $test->getDescription();
-    		$i++;
-    	}
+        $tests = $test_fetcher->fetchAllTests();
 
-    	$num_of_tests = $i;
-    	$num_of_rows = round($i/3);
+        $num_of_tests = count($tests);
+        $num_of_columns = 3;
+        $num_of_rows = round($num_of_tests/$num_of_columns);
 
-    	$remaining_number_of_tests = $num_of_tests;
-    	$remaining_number_of_rows = $num_of_rows;
-
-    	for ($i=0; $i < $num_of_rows; $i++) { 
-    		$num_of_tests_per_row[$i] = round($remaining_number_of_tests/$remaining_number_of_rows);
-    		$rows[$i]['length'] = $num_of_tests_per_row[$i];
-    		$offset = $num_of_tests - $remaining_number_of_tests;
-    		$rows[$i]['tests'] = array_slice($tests,$offset,$rows[$i]['length']);
-    		$remaining_number_of_tests = $remaining_number_of_tests - $num_of_tests_per_row[$i];
-    		$remaining_number_of_rows--;
-    	}
+    	$rows = $test_depictor->prepareTestsForDepiction($tests,$num_of_rows);
 
         return $this->render('test/index.html.twig', [
             'tests' => $tests,
@@ -56,11 +40,11 @@ class TestController extends AbstractController
     /**
      * @Route("/tests/{test_id}", name="specific_test", requirements={"test_id"="\d+"})
      */
-    public function show_specific_test($test_id)
+    public function showSpecificTest($test_id, TestFetcher $test_fetcher, TestDepictor $test_depictor)
     {
-    	$test_repo = $this->getDoctrine()->getRepository(Test::class);
-    	$test_obj = $test_repo->findOneBy(['id'=>$test_id]);
-    	$test['name'] = $test_obj->getName();
+    	$test_obj = $test_fetcher->fetchSpecificTest($test_id);
+        $test = $test_depictor->prepareTestForForm($test_obj);
+    	/*$test['name'] = $test_obj->getName();
 		$questions = $test_obj->getQuestions();
 		$i = 0;
 		foreach ($questions as $q) {
@@ -82,12 +66,12 @@ class TestController extends AbstractController
 				$j++;
 			}
 			$i++;
-		}
+		}*/
 
 		return $this->render('test/specific_test.html.twig', [
             'test' => $test,
-            'forms' => $form_views,
-            'empty_forms' => $empty_form_views
+            /*'forms' => $form_views,
+            'empty_forms' => $empty_form_views*/
         ]);
     }
 }

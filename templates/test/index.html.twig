@@ -3,13 +3,11 @@
 {% block title %}Home{% endblock %}
 
 {% block stylesheets %}
-	<link rel="stylesheet" type="text/css" href="css/test/index.css">
+    <link href="{{asset('css/test/index.css')}}" rel="stylesheet"/>
 {% endblock %}
 
 {% block body %}
 
-    <h1>Hello! ✅</h1>
-   
     {% for row in rows %}
     	<div class="row">
     		{% for j in 1..row['length'] %}

@@ -8,13 +8,29 @@
 {% block body %}
 
     <h1>{{test['name']|upper}}</h1>
+    <form>
+        {% for q in test['questions'] %}
+            <fieldset>
+                <legend>{{q['wording']}}</legend>
+            </fieldset>
+            {% if q['type']=='true/false' %}
+                a
+            {% elseif q['type']=='one_answer' %}
+                b
+            {% else %}
+                c
+            {% endif %}
+        {% endfor %}
+    </form>
+
+  {#  <h1>{{test['name']|upper}}</h1>
     {% for q in test['q'] %}
         <div id="question_wording">{{q['w']}}</div>
         <div id="answers">
         	{% for a in q['a'] %}
         		<div>{{a}}</div>
         	{% endfor %}
-        </div>>
+        </div>
     {% endfor %}
     
     {% for f in forms %}
@@ -31,6 +47,6 @@
             {% endfor %}
         {{form_end(f)}}
         <div>------------------------------------------</div>
-    {% endfor %}
+    {% endfor %} #}
 
 {% endblock %}
