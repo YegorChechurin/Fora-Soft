@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Results for {{results['test_name']}}{% endblock %}
+
+{% block stylesheets %}
+    <link href="{{asset('css/test/submitted_test.css')}}" rel="stylesheet"/>
+{% endblock %}
+
+{% block body %}
+
+	{{include('test/header.html.twig')}}
+
+    <h1>You results of completing test {{results['test_name']|upper}}</h1>
+
+    {% for q in results['questions'] %}
+
+    	<div class="question_block">
+    		<h3>{{q['wording']}}</h3>
+
+			<div><b>Correct answers:</b></div>
+	    	{% for a in q['correct_answers'] %}
+	    		<div>{{a}}</div>
+	    	{% endfor %}
+
+			<div><b>Answers you have given:</b></div>
+	    	{% for sa in q['submitted_answers'] %}
+	    		<div>{{sa}}</div>
+	    	{% endfor %}
+    	</div>
+
+    {% endfor %}
+
+{% endblock %}
