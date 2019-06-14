@@ -15,10 +15,12 @@ class QuestionAnswerFixture extends Fixture
 
         $answer_correctness = ['correct','wrong'];
 
+        $dummy_answers_count = 1;
+
         for ($i=0; $i < 25; $i++) { 
         	$q = new Question();
         	$ref_number = $i+1;
-        	$q->setWording('Question '.$ref_number);
+        	$q->setWording('Some dummy question formulation '.$ref_number);
             $q->setType($question_types[mt_rand(0,2)]);
             $q_type = $q->getType();
             if ($q_type=='true/false') {
@@ -41,7 +43,8 @@ class QuestionAnswerFixture extends Fixture
             } elseif ($q_type=='one_answer') {
                 $a = new Answer();
                 $a->setType('worded');
-                $a->setWording('Some dummy answer');
+                $a->setWording('Some dummy answer '.$dummy_answers_count);
+                $dummy_answers_count++;
                 $a->setCorrectness('correct');
                 $manager->persist($a);
                 $q->addAnswer($a);
@@ -49,7 +52,8 @@ class QuestionAnswerFixture extends Fixture
                 for ($j=0; $j < 5; $j++) { 
                     $a = new Answer();
                     $a->setType('worded');
-                    $a->setWording('Some dummy answer');
+                    $a->setWording('Some dummy answer '.$dummy_answers_count);
+                    $dummy_answers_count++;
                     $a->setCorrectness($answer_correctness[mt_rand(0,1)]);
                     $manager->persist($a);
                     $q->addAnswer($a);

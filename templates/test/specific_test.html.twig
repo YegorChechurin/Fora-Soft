@@ -2,32 +2,12 @@
 
 {% block title %}{{test['name']}}{% endblock %}
 
-{% block stylesheets %}
-{% endblock %}
-
 {% block body %}
+
+    {{include('test/header.html.twig')}}
 
     <h1>{{test['name']|upper}}</h1>
 
-    {#<form>
-        {% for q in test['questions'] %}
-            <fieldset>
-                <legend>{{q['wording']}}</legend>
-            </fieldset>
-            {% if q['type']=='true/false' %}
-                a
-            {% elseif q['type']=='one_answer' %}
-                b
-            {% else %}
-                c
-            {% endif %}
-        {% endfor %}
-    </form> #}
-
     {{form(form)}}
-
-    {{ form_start(form) }}
-        {{ form_row(form.submittedAnswers) }}
-    {{ form_end(form) }}
 
 {% endblock %}

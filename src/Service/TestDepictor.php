@@ -40,33 +40,4 @@ class TestDepictor
 
     	return $rows;
 	}
-
-	public function prepareTestForForm(Test $test_object): array 
-	{
-		$test_id = $test_object->getId();
-		$test_name = $test_object->getName();
-		$questions_obj = $test_object->getQuestions();
-
-		$i = 0;
-		foreach ($questions_obj as $q) {
-			$questions[$i]['type'] = $q->getType();
-			$questions[$i]['wording'] = $q->getWording();
-			$answers_obj = $q->getAnswers();
-			$j = 0;
-			foreach ($answers_obj as $a) {
-				$answers[$j] = $a->getWording();
-				$j++;
-			}
-			$questions[$i]['answers'] = $answers;
-			$i++;
-		}
-
-		$test = [
-			'id'=>$test_id,
-			'name'=>$test_name,
-			'questions'=>$questions
-		];
-
-		return $test;
-	}
 }
