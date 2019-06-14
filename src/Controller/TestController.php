@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\FormBuilderInterface;
 use App\Entity\SubmittedTest;
 use App\Entity\SubmittedAnswer;
-use App\Form\SubmittedTestType;
+use App\Form\TestSubmissionType;
 
 class TestController extends AbstractController
 {
