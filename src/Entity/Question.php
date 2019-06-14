@@ -38,10 +38,16 @@ class Question
      */
     private $answers;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\SubmittedAnswer", mappedBy="question_id", orphanRemoval=true)
+     */
+    private $submittedAnswers;
+
     public function __construct()
     {
         $this->tests = new ArrayCollection();
         $this->answers = new ArrayCollection();
+        $this->submittedAnswers = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -129,8 +135,39 @@ class Question
         return $this;
     }
 
-    public function __toString(): string 
+    /*public function __toString(): string 
     {
         return $this->getWording();
+    }*/
+
+    /**
+     * @return Collection|SubmittedAnswer[]
+     */
+    public function getSubmittedAnswers(): Collection
+    {
+        return $this->submittedAnswers;
+    }
+
+    public function addSubmittedAnswer(SubmittedAnswer $submittedAnswer): self
+    {
+        if (!$this->submittedAnswers->contains($submittedAnswer)) {
+            $this->submittedAnswers[] = $submittedAnswer;
+            $submittedAnswer->setQuestionId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSubmittedAnswer(SubmittedAnswer $submittedAnswer): self
+    {
+        if ($this->submittedAnswers->contains($submittedAnswer)) {
+            $this->submittedAnswers->removeElement($submittedAnswer);
+            // set the owning side to null (unless already changed)
+            if ($submittedAnswer->getQuestionId() === $this) {
+                $submittedAnswer->setQuestionId(null);
+            }
+        }
+
+        return $this;
     }
 }

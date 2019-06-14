@@ -7,13 +7,10 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Test;
 use App\Service\TestFetcher;
 use App\Service\TestDepictor;
-use App\Form\WordedAnswerType;
-use App\Form\TrueFalseAnswerType;
-use App\Form\ManyAnswersQuestionType;
-use App\Form\TrueFalseQuestionType;
-use App\Form\OneAnswerQuestionType;
-use App\Form\QuestionType;
-use App\Form\EmptyQuestionType;
+use Symfony\Component\HttpFoundation\Request;
+use App\Entity\SubmittedTest;
+use App\Entity\SubmittedAnswer;
+use App\Form\SubmittedTestType;
 
 class TestController extends AbstractController
 {
@@ -40,10 +37,31 @@ class TestController extends AbstractController
     /**
      * @Route("/tests/{test_id}", name="specific_test", requirements={"test_id"="\d+"})
      */
-    public function showSpecificTest($test_id, TestFetcher $test_fetcher, TestDepictor $test_depictor)
+    public function showSpecificTest(Request $request, $test_id, TestFetcher $test_fetcher, TestDepictor $test_depictor)
     {
     	$test_obj = $test_fetcher->fetchSpecificTest($test_id);
         $test = $test_depictor->prepareTestForForm($test_obj);
+
+        $submitted_test = new SubmittedTest();
+        //$submitted_test->setTestId($test_obj);
+
+        $questions = $test_obj->getQuestions();
+
+        foreach ($questions as $q) {
+            $submitted_answer = new SubmittedAnswer();
+            //$submitted_answer->setQuestionId($q);
+            $submitted_test->addSubmittedAnswer($submitted_answer);
+        }
+
+        $form = $this->createForm(SubmittedTestType::class, $submitted_test);
+//dd($form);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            dd($a = $form->getData());
+        }
+
     	/*$test['name'] = $test_obj->getName();
 		$questions = $test_obj->getQuestions();
 		$i = 0;
@@ -70,6 +88,7 @@ class TestController extends AbstractController
 
 		return $this->render('test/specific_test.html.twig', [
             'test' => $test,
+            'form' => $form->createView(),
             /*'forms' => $form_views,
             'empty_forms' => $empty_form_views*/
         ]);

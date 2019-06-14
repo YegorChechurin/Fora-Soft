@@ -8,7 +8,8 @@
 {% block body %}
 
     <h1>{{test['name']|upper}}</h1>
-    <form>
+
+    {#<form>
         {% for q in test['questions'] %}
             <fieldset>
                 <legend>{{q['wording']}}</legend>
@@ -21,32 +22,12 @@
                 c
             {% endif %}
         {% endfor %}
-    </form>
+    </form> #}
 
-  {#  <h1>{{test['name']|upper}}</h1>
-    {% for q in test['q'] %}
-        <div id="question_wording">{{q['w']}}</div>
-        <div id="answers">
-        	{% for a in q['a'] %}
-        		<div>{{a}}</div>
-        	{% endfor %}
-        </div>
-    {% endfor %}
-    
-    {% for f in forms %}
-    	{{form(f)}}
-    {% endfor %}
+    {{form(form)}}
 
-    <div>------------------------------------------</div>
-
-    {% for f in empty_forms %}
-        {{form_start(f)}}
-            {{form_label(f.wording)}}
-            {% for a in f.answers %}
-                {{form_row(a.wording)}}
-            {% endfor %}
-        {{form_end(f)}}
-        <div>------------------------------------------</div>
-    {% endfor %} #}
+    {{ form_start(form) }}
+        {{ form_row(form.submittedAnswers) }}
+    {{ form_end(form) }}
 
 {% endblock %}

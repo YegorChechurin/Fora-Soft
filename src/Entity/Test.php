@@ -33,9 +33,15 @@ class Test
      */
     private $description;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\SubmittedTest", mappedBy="test_id", orphanRemoval=true)
+     */
+    private $submittedTests;
+
     public function __construct()
     {
         $this->questions = new ArrayCollection();
+        $this->submittedTests = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -92,4 +98,40 @@ class Test
 
         return $this;
     }
+
+    /**
+     * @return Collection|SubmittedTest[]
+     */
+    public function getSubmittedTests(): Collection
+    {
+        return $this->submittedTests;
+    }
+
+    public function addSubmittedTest(SubmittedTest $submittedTest): self
+    {
+        if (!$this->submittedTests->contains($submittedTest)) {
+            $this->submittedTests[] = $submittedTest;
+            $submittedTest->setTestId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSubmittedTest(SubmittedTest $submittedTest): self
+    {
+        if ($this->submittedTests->contains($submittedTest)) {
+            $this->submittedTests->removeElement($submittedTest);
+            // set the owning side to null (unless already changed)
+            if ($submittedTest->getTestId() === $this) {
+                $submittedTest->setTestId(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /*public function __toString(): string  
+    {
+        return strval($this->getId());
+    }*/
 }

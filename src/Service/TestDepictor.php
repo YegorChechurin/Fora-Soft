@@ -43,6 +43,7 @@ class TestDepictor
 
 	public function prepareTestForForm(Test $test_object): array 
 	{
+		$test_id = $test_object->getId();
 		$test_name = $test_object->getName();
 		$questions_obj = $test_object->getQuestions();
 
@@ -61,6 +62,7 @@ class TestDepictor
 		}
 
 		$test = [
+			'id'=>$test_id,
 			'name'=>$test_name,
 			'questions'=>$questions
 		];
