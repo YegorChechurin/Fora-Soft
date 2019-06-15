@@ -117,7 +117,8 @@ class TestSubmissionHandler
 	{
 		$submitted_test = new SubmittedTest();
 		$submitted_test->setTestId($test)
-				       ->setDate(new \DateTime());
+				       /*->setDate(new \DateTime());*/
+				       ->setDate(\DateTime::createFromFormat('Y-m-d H:i:s',\date('Y-m-d H:i:s')));
 
 		$questions = $test->getQuestions();
 		$i = 0;

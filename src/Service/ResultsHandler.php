@@ -12,6 +12,11 @@ class ResultsHandler
 	public function prepareResults(SubmittedTest $submitted_test_object, Test $test_object): array
 	{
 		$test_name = $test_object->getName();
+
+		if ($submitted_test_object->getDate()) {
+			$submission_date = $submitted_test_object->getDate()->format('Y-m-d H:i:s');
+		}
+
 		$questions_obj = $test_object->getQuestions();
 		$sub_answers_obj = $submitted_test_object->getSubmittedAnswers();
 
@@ -42,6 +47,7 @@ class ResultsHandler
 		}
 
 		$results = [
+			'submission_date'=>$submission_date,
 			'test_name'=>$test_name,
 			'questions'=>$questions
 		];

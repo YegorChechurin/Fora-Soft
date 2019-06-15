@@ -11,6 +11,7 @@
 	{{include('test/header.html.twig')}}
 
     <h1>You results of completing test {{results['test_name']|upper}}</h1>
+    <div>Submitted {{results['submission_date']}}</div>
 
     {% for q in results['questions'] %}
 
