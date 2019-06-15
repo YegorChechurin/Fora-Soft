@@ -15,6 +15,8 @@ class ResultsHandler
 
 		if ($submitted_test_object->getDate()) {
 			$submission_date = $submitted_test_object->getDate()->format('Y-m-d H:i:s');
+		} else {
+			$submission_date = null;
 		}
 
 		$questions_obj = $test_object->getQuestions();
