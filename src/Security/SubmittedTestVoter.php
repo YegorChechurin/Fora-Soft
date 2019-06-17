@@ -35,8 +35,7 @@ class SubmittedTestVoter extends Voter
             $user_id = null;
         }
 
-        // you know $subject is a Post object, thanks to supports
-        /** @var Post $post */
+        // we know $subject is a SubmittedTest object, thanks to supports
         $submitted_test = $subject;
 
         switch ($attribute) {
