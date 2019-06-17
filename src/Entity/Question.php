@@ -24,7 +24,7 @@ class Question
     private $wording;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Test", mappedBy="wordings")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Test", mappedBy="questions")
      */
     private $tests;
 
