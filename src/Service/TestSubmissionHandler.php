@@ -15,9 +15,17 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Security\Core\Security;
 
 class TestSubmissionHandler 
 {
+	private $security;
+
+    public function __construct(Security $security)
+    {
+        $this->security = $security;
+    }
+
 	public function prepareTestForSubmissionForm(Test $test_object): array 
 	{
 		$test_id = $test_object->getId();
@@ -118,6 +126,11 @@ class TestSubmissionHandler
 		$submitted_test = new SubmittedTest();
 		$submitted_test->setTestId($test)
 				       ->setDate(\DateTime::createFromFormat('Y-m-d H:i:s',\date('Y-m-d H:i:s')));
+
+		$user = $this->security->getUser();
+		if ($user) {
+			$submitted_test->setUserId($user);
+		}
 
 		$questions = $test->getQuestions();
 		$i = 0;

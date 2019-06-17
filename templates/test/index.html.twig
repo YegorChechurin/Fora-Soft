@@ -1,12 +1,16 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Home{% endblock %}
+{% block title %}All tests{% endblock %}
 
 {% block stylesheets %}
     <link href="{{asset('css/test/index.css')}}" rel="stylesheet"/>
 {% endblock %}
 
 {% block body %}
+
+    {% if is_granted('ROLE_USER') %}
+        <div>Hi {{app.user.username}}! Check your previously completed tests <a href="{{path('all_user_submitted_tests',{'user_id':app.user.id})}}">here</a> or <a href="{{path('app_logout')}}">logout</a></div>
+    {% endif %}
 
     {% for row in rows %}
     	<div class="row">

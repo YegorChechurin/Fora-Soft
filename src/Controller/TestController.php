@@ -16,10 +16,18 @@ use App\Form\TestSubmissionType;
 
 class TestController extends AbstractController
 {
-    /**
-     * @Route("/", name="homepage")
+    /** 
+     * @Route("/", name="homepage") 
      */
-    public function index(TestFetcher $test_fetcher, TestDepictor $test_depictor)
+    public function index() 
+    {
+        return $this->render('security/homepage.html.twig');
+    }
+
+    /**
+     * @Route("/tests", name="all_tests")
+     */
+    public function showAllTests(TestFetcher $test_fetcher, TestDepictor $test_depictor)
     {
         $tests = $test_fetcher->fetchAllTests();
 

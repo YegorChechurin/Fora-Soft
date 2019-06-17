@@ -19,6 +19,23 @@ class SubmittedTestRepository extends ServiceEntityRepository
         parent::__construct($registry, SubmittedTest::class);
     }
 
+    public function findAllForUserReverse($user_id): ?array 
+    {
+        $sub_tests = $this->createQueryBuilder('st')
+            ->andWhere('st.user_id = :val')
+            ->setParameter('val', $user_id)
+            ->orderBy('st.id', 'DESC')
+            /*->setMaxResults(10)*/
+            ->getQuery()
+            ->getResult()
+        ;
+        if ($sub_tests) {
+            return $sub_tests;
+        } else {
+            return null;
+        }
+    }
+
     // /**
     //  * @return SubmittedTest[] Returns an array of SubmittedTest objects
     //  */
