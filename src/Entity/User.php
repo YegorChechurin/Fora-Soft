@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -32,6 +34,16 @@ class User implements UserInterface
      * @ORM\Column(type="string")
      */
     private $password;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\SubmittedTest", mappedBy="user_id")
+     */
+    private $submittedTests;
+
+    public function __construct()
+    {
+        $this->submittedTests = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -104,5 +116,36 @@ class User implements UserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    /**
+     * @return Collection|SubmittedTest[]
+     */
+    public function getSubmittedTests(): Collection
+    {
+        return $this->submittedTests;
+    }
+
+    public function addSubmittedTest(SubmittedTest $submittedTest): self
+    {
+        if (!$this->submittedTests->contains($submittedTest)) {
+            $this->submittedTests[] = $submittedTest;
+            $submittedTest->setUserId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSubmittedTest(SubmittedTest $submittedTest): self
+    {
+        if ($this->submittedTests->contains($submittedTest)) {
+            $this->submittedTests->removeElement($submittedTest);
+            // set the owning side to null (unless already changed)
+            if ($submittedTest->getUserId() === $this) {
+                $submittedTest->setUserId(null);
+            }
+        }
+
+        return $this;
     }
 }
