@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Home{% endblock %}
+
+{% block body %}
+
+    <div>
+        <h2>You have following options for using this website:</h2>
+        <ul>
+            <li><a href="{{path('app_login')}}">log in</a> if you have already signed up</li>
+            <li><a href="#">sign up</a> if you would like to store your test results and view them later</li>
+            <li>proceed as a <a href="{{path('all_tests')}}">guest user</a></li>
+        </ul>
+    </div>
+    
+{% endblock %}

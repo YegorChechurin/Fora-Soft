@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Completed tests{% endblock %}
+
+{% block body %}
+
+	{{include('test/header.html.twig')}}
+
+    {% if tests %}
+        <h2>{{app.user.username}} below is the list of your completed tests:</h2>
+        <ul>
+            {% for t in tests %}
+                {% if t.date %}
+                    <li><a href="{{path('test_submission_results',{'submitted_test_id':t.id})}}">{{t.name}} completed {{t.date}}</a></li>
+                {% else %}
+                    <li><a href="{{path('test_submission_results',{'submitted_test_id':t.id})}}">{{t.name}}</a></li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+    {% else %}
+        <div><b>You have not completed any tests yet!</b></div>
+    {% endif %}
+
+{% endblock %}
